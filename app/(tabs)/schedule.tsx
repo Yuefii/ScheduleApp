@@ -1,164 +1,67 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { StatusBar } from 'expo-status-bar'
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import { SCHEDULE_DATA } from '@/constants/schedule';
+import { ScheduleItem } from '@/components/ScheduleItem';
 
-export default function Schedule() {
+export default function Schedule(){
   return (
     <SafeAreaView>
-    <StatusBar style="light" backgroundColor='#000' />
-      <View style={{
-        backgroundColor: "#000",
-        height: 50,
-      }}>
-      <Text style={{
-        fontSize: 20,
-        color: "#fff",
-        paddingVertical: 10,
-        textAlign: "center"
-      }}>Schedule</Text>
+      <StatusBar 
+      style="light" 
+      backgroundColor='#000' />
+      <View 
+      style={styles.header}>
+        <Text 
+        style={styles.headerText}>Schedule</Text>
       </View>
-      <View style={{
-        backgroundColor: "#fff",
-        padding: 10,
-        height: 100,
-        borderStyle: "solid",
-        borderColor: "#000",
-        marginVertical: 10,
-      }}>
-        <Text style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            textDecorationLine: "underline"
-        }}>Rabu</Text>
-        <View style={{
-            marginTop: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 20
-        }}>
-            <Text style={{
-                borderRightWidth: 3,
-                paddingRight: 10,
-                fontSize: 16,
-            }}>10.30 - 11.30</Text>
-            <Text style={{
-                backgroundColor: "#000",
-                borderRadius: 20,
-                fontSize: 16,
-                color: "#fff",
-                paddingHorizontal: 20,
-                paddingVertical: 3,
-            }}>Kimia</Text>
+      {SCHEDULE_DATA.map((daySchedule, index) => (
+        <View
+          key={index}
+          style={styles.scheduleDay}
+        >
+          <Text 
+          style={styles.dayText}>
+            {daySchedule.day}
+            </Text>
+          {daySchedule.events.map((event, idx) => (
+            <ScheduleItem
+              key={idx}
+              time={event.time}
+              subject={event.subject}
+              isHighlighted={event.isHighlighted}
+            />
+          ))}
         </View>
-      </View>
-      <View style={{
-        backgroundColor: "#fff",
-        padding: 10,
-        height: "auto",
-        borderStyle: "solid",
-        borderColor: "#000"
-      }}>
-        <Text style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            textDecorationLine: "underline"
-        }}>Kamis</Text>
-        <View>
-            <View style={{
-            marginTop: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 20
-        }}>
-            <Text style={{
-                borderRightWidth: 3,
-                paddingRight: 10,
-                fontSize: 16,
-            }}>09.30 - 10.30</Text>
-            <Text style={{
-                fontSize: 16,
-                paddingVertical: 3,
-            }}>Teknologi Web</Text>
-            </View>
-        </View>
-        <View>
-            <View style={{
-            marginTop: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 20
-        }}>
-            <Text style={{
-                borderRightWidth: 3,
-                paddingRight: 10,
-                fontSize: 16,
-            }}>10.30 - 11.30</Text>
-            <Text style={{
-                backgroundColor: "#000",
-                borderRadius: 20,
-                fontSize: 16,
-                color: "#fff",
-                paddingHorizontal: 20,
-                paddingVertical: 3,
-            }}>Komunikasi Prof</Text>
-            </View>
-        </View>
-      </View>
-      <View style={{
-        backgroundColor: "#fff",
-        padding: 10,
-        height: "auto",
-        borderStyle: "solid",
-        borderColor: "#000",
-        marginVertical: 10
-      }}>
-        <Text style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            textDecorationLine: "underline"
-        }}>Sabtu</Text>
-        <View>
-            <View style={{
-            marginTop: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 20
-        }}>
-            <Text style={{
-                borderRightWidth: 3,
-                paddingRight: 10,
-                fontSize: 16,
-            }}>09.30 - 10.30</Text>
-            <Text style={{
-                backgroundColor: "#000",
-                borderRadius: 20,
-                fontSize: 16,
-                color: "#fff",
-                paddingHorizontal: 20,
-                paddingVertical: 3,
-            }}>Permodelan Data</Text>
-            </View>
-        </View>
-        <View>
-            <View style={{
-            marginTop: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 20
-        }}>
-            <Text style={{
-                borderRightWidth: 3,
-                paddingRight: 10,
-                fontSize: 16,
-            }}>10.30 - 11.30</Text>
-            <Text style={{
-                fontSize: 16,
-                paddingVertical: 3,
-            }}>Jaringan Nirkabel</Text>
-            </View>
-        </View>
-      </View>
+      ))}
     </SafeAreaView>
-  )
-}
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    backgroundColor: "#000",
+    height: 50,
+  },
+  headerText: {
+    fontSize: 20,
+    color: "#fff",
+    paddingVertical: 10,
+    textAlign: "center"
+  },
+  scheduleDay: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    height: 130,
+    marginTop: 16,
+    marginHorizontal: 10,
+    borderRadius: 16,
+  },
+  dayText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textDecorationLine: "underline",
+  },
+});
